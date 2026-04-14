@@ -1,26 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:          #F2EDE4;
+  --surface:     #EBE6DD;
+  --surface-2:   #E4DFCE;
+  --border:      rgba(0, 0, 0, 0.09);
+  --border-mid:  rgba(0, 0, 0, 0.15);
+  --accent:      #E63946;
+  --accent-muted:#E6394618;
+  --accent-glow: rgba(230, 57, 70, 0.12);
+  --text:        #0D0D0D;
+  --muted:       #7A7570;
+  --dim:         #B8B2AA;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
 }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { font-family: 'Archivo', 'Space Grotesk', sans-serif; }
+
+/* Ruled lines */
+.ruled       { border-top: 1px solid var(--border); }
+.ruled-mid   { border-top: 1px solid var(--border-mid); }
+.ruled-heavy { border-top: 2px solid var(--text); }
+
+/* Card surface */
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* Section number */
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5rem);
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+@keyframes clipUp {
+  from { clip-path: inset(100% 0 0 0); opacity: 0; }
+  to   { clip-path: inset(0% 0 0 0);   opacity: 1; }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
