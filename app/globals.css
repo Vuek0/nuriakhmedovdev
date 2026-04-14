@@ -66,6 +66,26 @@ h1, h2, h3, h4 { font-family: 'Archivo', 'Space Grotesk', sans-serif; }
   to   { transform: rotate(360deg); }
 }
 
+@keyframes marqueeLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRight {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.marquee-left  { animation: marqueeLeft  28s linear infinite; }
+.marquee-right { animation: marqueeRight 28s linear infinite; }
+.marquee-left:hover,
+.marquee-right:hover { animation-play-state: paused; }
+
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }

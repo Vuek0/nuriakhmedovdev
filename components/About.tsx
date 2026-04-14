@@ -94,13 +94,40 @@ export default function About() {
             <p className="text-base mb-10 leading-[1.85]" style={{ color: "var(--muted)" }}>
               I care about clean code, thoughtful UI, and shipping things that actually work.
             </p>
-            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl border text-xs"
-              style={{ background: "var(--surface)", borderColor: "rgba(34,197,94,0.2)", color: "var(--muted)", fontFamily: "'Space Mono', monospace" }}>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="uppercase tracking-widest">Open to new projects</span>
-            </div>
+
+            {/* Animated badge */}
+            <motion.div
+              className="inline-flex items-center gap-3 px-5 py-3 rounded-xl border text-xs overflow-hidden relative"
+              style={{
+                background: "var(--surface)",
+                borderColor: "rgba(34,197,94,0.25)",
+                color: "var(--muted)",
+                fontFamily: "'Space Mono', monospace",
+              }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.55 }}
+              whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+            >
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.45) 50%, transparent 60%)",
+                  backgroundSize: "200% 100%",
+                }}
+                animate={{ backgroundPosition: ["-200% center", "200% center"] }}
+                transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 2.5, ease: "easeInOut" }}
+              />
+              <motion.span
+                className="w-2 h-2 rounded-full bg-emerald-400"
+                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <span className="uppercase tracking-widest relative z-10">Open to new projects</span>
+            </motion.div>
           </motion.div>
 
+          {/* Skills grid */}
           <div className="space-y-1">
             {SKILLS.map((s, i) => (
               <motion.div key={s.category}
@@ -114,11 +141,29 @@ export default function About() {
                   {s.category}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {s.items.map((item) => (
-                    <span key={item} className="text-xs px-3 py-1.5 rounded-lg"
-                      style={{ background: "var(--surface)", color: "var(--muted)", border: "1px solid var(--border)" }}>
+                  {s.items.map((item, j) => (
+                    <motion.span
+                      key={item}
+                      className="text-xs px-3 py-1.5 rounded-lg cursor-default select-none"
+                      style={{
+                        background: "var(--surface)",
+                        color: "var(--muted)",
+                        border: "1px solid var(--border)",
+                        display: "inline-block",
+                      }}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.35, delay: 0.35 + i * 0.07 + j * 0.03 }}
+                      whileHover={{
+                        backgroundColor: "var(--accent)",
+                        color: "#ffffff",
+                        borderColor: "var(--accent)",
+                        y: -2,
+                        scale: 1.05,
+                        transition: { duration: 0.15 },
+                      }}>
                       {item}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>
