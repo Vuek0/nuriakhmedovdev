@@ -1,31 +1,52 @@
-import { GithubIcon, LinkedinIcon, TelegramIcon, InstagramIcon } from "@/components/icons";
-
-const SOCIALS = [
-  { icon: GithubIcon,   href: "https://github.com/Vuek0",                                       label: "GitHub" },
-  { icon: TelegramIcon, href: "https://t.me/Vuek0",                                             label: "Telegram" },
-  { icon: LinkedinIcon, href: "https://www.linkedin.com/in/muhammad-nuriakhmedov-0464b3301/",   label: "LinkedIn" },
-  { icon: InstagramIcon,href: "https://www.instagram.com/_vueko_",                              label: "Instagram" },
-];
+import Link from "next/link";
+import Wordmark from "./Wordmark";
+import Media from "./Media";
+import { NAV, SITE, SOCIALS } from "@/lib/site";
+import { PROJECTS } from "@/lib/projects";
 
 export default function Footer() {
+  const latest = PROJECTS[0];
   return (
-    <footer className="py-7 border-t" style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)" }}>
-      <div className="max-w-5xl mx-auto px-6 sm:px-14 md:px-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <span className="font-bold text-sm" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.1em", color: "var(--muted)", fontSize: "1rem" }}>MN</span>
-          <span className="text-xs" style={{ color: "var(--dim)", fontFamily: "'Space Mono', monospace" }}>
-            © {new Date().getFullYear()} Muhammad Nuriakhmedov
-          </span>
+    <footer className="footer">
+      <div className="footer-top container">
+        <div className="footer-col">
+          <span className="logo">MN</span>
+          <ul className="footer-nav">
+            {NAV.slice(1).map((i) => (
+              <li key={i.href}>
+                <Link href={i.href}>{i.label}</Link>
+              </li>
+            ))}
+            <li>
+              <a href={SITE.studio.href} target="_blank" rel="noopener noreferrer">
+                {SITE.studio.name} ↗
+              </a>
+            </li>
+          </ul>
         </div>
-        <div className="flex items-center gap-3">
-          {SOCIALS.map(({ icon: Icon, href, label }) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
-              className="p-3 rounded-xl border cursor-pointer transition-colors hover:text-[var(--text)]"
-              style={{ borderColor: "var(--border)", color: "var(--dim)", background: "var(--surface)" }}>
-              <Icon size={16} />
-            </a>
-          ))}
+        <div className="footer-col footer-col--right">
+          <div className="footer-social">
+            {SOCIALS.map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label} ↗
+              </a>
+            ))}
+          </div>
+          <div className="footer-latest">
+            <div className="eyebrow eyebrow--light">Latest work</div>
+            <Link href={`/projects/${latest.slug}`} className="footer-latest-card">
+              <Media src={latest.images[0]} label={latest.title} ratio="16 / 10" plate sizes="340px" />
+              <span>{latest.title}</span>
+            </Link>
+          </div>
         </div>
+      </div>
+      <div className="container">
+        <Wordmark text="Nuriakhmedov" className="wordmark--light" />
+      </div>
+      <div className="footer-bottom container">
+        <span>©{new Date().getFullYear()} {SITE.name}</span>
+        <span>{SITE.location}</span>
       </div>
     </footer>
   );
